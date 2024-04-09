@@ -362,7 +362,8 @@ module CombinePDF
           @scanner.pos += 1 if @scanner.peek(1) == "\n".freeze && @scanner.matched[-1] != "\n".freeze
           # advance by the publshed stream length (if any)
           old_pos = @scanner.pos
-          length_to_add = out.last[:Length] - 2
+          length_to_add = out.last[:Length] - 2 if out.last.is_a?(Hash) && out.last[:Length].is_a?(Integer)
+
           if(out.last.is_a?(Hash) && out.last[:Length].is_a?(Integer) && out.last[:Length] > 2 &&
             (@scanner.string.length > @scanner.pos + length_to_add))
             # @scanner.pos += out.last[:Length] - 2
